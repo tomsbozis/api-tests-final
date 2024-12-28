@@ -5,19 +5,18 @@ pipeline {
         PATH = "/Applications/Docker.app/Contents/Resources/bin:$PATH"
     }
 
-    triggers {
-        githubPush()
-    }
-
     stages {
         stage('build-docker-image') {
             steps {
                 echo "Building docker image"
+                echo "Check current PATH"
+                sh 'echo $PATH'  // Add this line to confirm the PATH is correct
                 echo "Check Docker version"
                 sh 'docker --version'
                 buildDockerImage()
             }
         }
+
         stage('deploy-dev') {
             steps {
                 echo "Deployment triggered on DEV env"
