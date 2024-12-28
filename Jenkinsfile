@@ -1,9 +1,9 @@
 pipeline {
     agent any
 
-    environment {
-        PATH = "/Applications/Docker.app/Contents/Resources/bin:$PATH"
-    }
+    // environment {
+    //     PATH = "/Applications/Docker.app/Contents/Resources/bin:$PATH"
+    // }
 
     stages {
         stage('build-docker-image') {
