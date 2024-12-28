@@ -27,7 +27,7 @@ pipeline {
 }
 
 def buildDockerImage(){
-    sh "docker build -t tomsbozis/api-tests-final ."
+    sh "docker build -t tomsbozis/api-tests-final:latest ."
 
     echo "Pushing image to docker registry.."
     // sh "docker push tomsbozis/api-tests-final"
