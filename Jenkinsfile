@@ -1,9 +1,8 @@
 pipeline {
     agent any
 
-     triggers {
+    triggers {
         githubPush()
-        // problems as webhook can't be placed on localhost Jenkins etc..
     }
 
     stages {
@@ -11,8 +10,9 @@ pipeline {
             steps {
                 echo "Building docker image"
                 echo "Check if Docker is accessible via jenkins"
-                sh 'docker --version'
+                sh 'docker --version'  // Check Docker version inside Jenkins
 
+                // Commented out buildDockerImage to just check Docker availability
                 // buildDockerImage()
             }
         }
@@ -31,7 +31,6 @@ pipeline {
 
 def buildDockerImage(){
     sh "docker build -t tomsbozis/api-tests-final:latest ."
-
     echo "Pushing image to docker registry.."
-    // sh "docker push tomsbozis /api-tests-final"
+    // sh "docker push tomsbozis/api-tests-final"
 }
