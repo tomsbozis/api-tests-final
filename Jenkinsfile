@@ -1,6 +1,7 @@
 pipeline {
     agent any
     // testing trigger
+    // second test
      triggers {
         githubPush()
     }
