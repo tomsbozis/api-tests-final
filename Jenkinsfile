@@ -10,6 +10,8 @@ pipeline {
             steps {
                 echo "Building docker image"
                 echo "Check if Docker is accessible via jenkins"
+                sh 'which docker'
+                sh 'whereis docker'
                 sh 'docker --version'  // Check Docker version inside Jenkins
 
                 // Commented out buildDockerImage to just check Docker availability
