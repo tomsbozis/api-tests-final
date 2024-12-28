@@ -1,9 +1,9 @@
 pipeline {
     agent any
 
-    // environment {
-    //     PATH = "/Applications/Docker.app/Contents/Resources/bin:$PATH"
-    // }
+    environment {
+        PATH = "/Applications/Docker.app/Contents/Resources/bin:$PATH"
+    }
 
     triggers {
         githubPush()
@@ -13,13 +13,9 @@ pipeline {
         stage('build-docker-image') {
             steps {
                 echo "Building docker image"
-                echo "Check if Docker is accessible via jenkins"
-                sh 'which docker'
-                sh 'whereis docker'
-                sh 'docker --version'  // Check Docker version inside Jenkins
-
-                // Commented out buildDockerImage to just check Docker availability
-                // buildDockerImage()
+                echo "Check Docker version"
+                sh 'docker --version'
+                buildDockerImage()
             }
         }
         stage('deploy-dev') {
@@ -36,7 +32,8 @@ pipeline {
 }
 
 def buildDockerImage(){
+    echo "Start building Docker image"
     sh "docker build -t tomsbozis/api-tests-final:latest ."
-    echo "Pushing image to docker registry.."
+    echo "It went well and it is built"
     // sh "docker push tomsbozis/api-tests-final"
 }
