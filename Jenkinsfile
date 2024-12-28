@@ -10,6 +10,7 @@ pipeline {
         stage('build-docker-image') {
             steps {
                 echo "Building docker image"
+                buildDockerImage()
             }
         }
         stage('deploy-dev') {
@@ -23,4 +24,11 @@ pipeline {
             }
         }
     }
+}
+
+def buildDockerImage(){
+    sh "docker build -t tomsbozis/api-tests-final ."
+
+    echo "Pushing image to docker registry.."
+    // sh "docker push tomsbozis/api-tests-final"
 }
