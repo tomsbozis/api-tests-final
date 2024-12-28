@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        PATH = "/Applications/Docker.app/Contents/Resources/bin:$PATH"
+    }
+
     triggers {
         githubPush()
     }
