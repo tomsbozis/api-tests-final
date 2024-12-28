@@ -1,10 +1,10 @@
 pipeline {
-    // agent any
+    agent any
 
      triggers {
         githubPush()
+        // problems as webhook can't be placed on localhost Jenkins etc..
     }
-    // problems as webhook can't be placed on localhost Jenkins etc..
 
     stages {
         stage('build-docker-image') {
@@ -13,7 +13,7 @@ pipeline {
                 echo "Check if Docker is accessible via jenkins"
                 sh 'docker --version'
 
-                buildDockerImage()
+                // buildDockerImage()
             }
         }
         stage('deploy-dev') {
