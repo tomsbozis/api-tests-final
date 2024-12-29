@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    triggers {
+        pollSCM('*/1 * * * *')
+    }
+
     parameters {
         string(name: 'DOCKER_USER', defaultValue: '', description: 'Docker Hub Username')
         password(name: 'DOCKER_PASSWORD', defaultValue: '', description: 'Docker Hub Password')
