@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    parameters {
+        string(name: 'DOCKER_USER', defaultValue: '', description: 'Docker Hub Username')
+        password(name: 'DOCKER_PASSWORD', defaultValue: '', description: 'Docker Hub Password')
+    }
+
     stages {
         stage('build-docker-image') {
             steps {
@@ -31,9 +36,7 @@ def buildDockerImage(){
     sh "docker build --no-cache -t tomsbozis/api-tests-final:latest ."
 
     echo "Log in to Docker Hub for push step"
-    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', dockerUsername: 'DOCKER_USER', dockerPassword: 'DOCKER_PASSWORD')]) {
-        sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin'
-    }
+    sh "echo ${params.DOCKER_PASSWORD} | docker login -u ${params.DOCKER_USER} --password-stdin"
 
     echo "Start pushing Docker image"
     sh "docker push tomsbozis/api-tests-final"
