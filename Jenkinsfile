@@ -1,18 +1,10 @@
 pipeline {
     agent any
 
-    // environment {
-    //     PATH = "/Applications/Docker.app/Contents/Resources/bin:$PATH"
-    // }
-
     stages {
         stage('build-docker-image') {
             steps {
-                echo "Building docker image"
-                echo "Check current PATH"
-                sh 'echo $PATH'  // Add this line to confirm the PATH is correct
-                echo "Check Docker version"
-                sh 'docker --version'
+                getGitRepository()
                 buildDockerImage()
             }
         }
@@ -29,10 +21,14 @@ pipeline {
         }
     }
 }
+def getGitRepository(){
+    echo "Getting Git repository via script"
+    git branch: 'main', url: 'https://github.com/tomsbozis/api-tests-final'
+}
 
 def buildDockerImage(){
-    echo "Start building Docker image"
-    sh "docker build -t tomsbozis/api-tests-final:latest ."
-    echo "It went well and it is built"
-    // sh "docker push tomsbozis/api-tests-final"
+    echo "Start building Docker image without cache"
+    sh "docker build --no-cache -t tomsbozis/api-tests-final:latest ."
+    echo "Start pushing Docker image"
+    sh "docker push tomsbozis/api-tests-final"
 }
